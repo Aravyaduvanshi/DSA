@@ -1,15 +1,15 @@
 #include <stdio.h>
 
 int main() {
-    int n, target;
+    int s, target;
 
     printf("Enter number of elements: ");
-    scanf("%d", &n);
+    scanf("%d", &s);
 
-    int arr[n];
+    int arr[s];
 
-    printf("Enter %d elements:\n", n);
-    for (int i = 0; i < n; i++) {
+    printf("Enter %d elements:\n", s);
+    for (int i = 0; i < s; i++) {
         scanf("%d", &arr[i]);
     }
 
@@ -18,7 +18,7 @@ int main() {
 
     int found = 0;
 
-    for (int i = 0; i < n; i++) {
+    for (int i = 0; i < s; i++) {
         if (arr[i] == target) {
             printf("Element found at index %d\n", i);
             found = 1;
