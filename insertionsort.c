@@ -1,5 +1,7 @@
 #include <stdio.h>
 
+
+//online ,inplace , stable 
 int main(){
 
   int n ;

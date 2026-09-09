@@ -1,5 +1,5 @@
 #include <stdio.h>
-
+//offline,unstable,inplace 
 void selectionSort(int arr[], int n) {
     int i, j, minIdx, temp;
     for (i = 0; i < n-1; i++) {
@@ -16,8 +16,9 @@ void selectionSort(int arr[], int n) {
 
 int main() {
     int n ;
+    printf("Enter number of elements: ");
+    scanf("%d",&n);
     int arr[n];
-    n=sizeof(arr)/sizeof(arr[0]);
     for (int i = 0; i < n; i++)
         scanf("%d", &arr[i]);
     selectionSort(arr, n);
