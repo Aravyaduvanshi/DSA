@@ -51,13 +51,13 @@ int main()
     {
         ch = expression[i];
 
-        /* Opening bracket */
+        
         if (ch == '(' || ch == '[' || ch == '{')
         {
             push(ch);
         }
 
-        /* Closing bracket */
+       
         else if (ch == ')' || ch == ']' || ch == '}')
         {
             popped = pop();
