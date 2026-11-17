@@ -1,0 +1,133 @@
+#include <stdio.h>
+
+#define MAX 100
+
+// Edge structure
+struct Edge {
+    int u;
+    int v;
+    int weight;
+};
+
+// Find the representative of a set
+int find(int parent[], int x)
+{
+    if (parent[x] != x)
+        parent[x] = find(parent, parent[x]);
+
+    return parent[x];
+}
+
+// Union two sets
+void unionSet(int parent[], int rank[], int x, int y)
+{
+    int rootX = find(parent, x);
+    int rootY = find(parent, y);
+
+    // Already in the same set
+    if (rootX == rootY)
+        return;
+
+    // Union by rank
+    if (rank[rootX] < rank[rootY])
+    {
+        parent[rootX] = rootY;
+    }
+    else if (rank[rootX] > rank[rootY])
+    {
+        parent[rootY] = rootX;
+    }
+    else
+    {
+        parent[rootY] = rootX;
+        rank[rootX]++;
+    }
+}
+
+// Sort edges by weight
+void sortEdges(struct Edge edges[], int E)
+{
+    for (int i = 0; i < E - 1; i++)
+    {
+        for (int j = 0; j < E - i - 1; j++)
+        {
+            if (edges[j].weight > edges[j + 1].weight)
+            {
+                struct Edge temp = edges[j];
+                edges[j] = edges[j + 1];
+                edges[j + 1] = temp;
+            }
+        }
+    }
+}
+
+// Kruskal's Algorithm
+void kruskal(struct Edge edges[], int V, int E)
+{
+    int parent[MAX];
+    int rank[MAX];
+
+    // Initially every vertex is its own set
+    for (int i = 0; i < V; i++)
+    {
+        parent[i] = i;
+        rank[i] = 0;
+    }
+
+    // Sort edges by increasing weight
+    sortEdges(edges, E);
+
+    int edgeCount = 0;
+    int totalCost = 0;
+
+    printf("\nEdges selected:\n");
+
+    for (int i = 0; i < E && edgeCount < V - 1; i++)
+    {
+        int u = edges[i].u;
+        int v = edges[i].v;
+
+        // Check whether adding this edge creates a cycle
+        if (find(parent, u) != find(parent, v))
+        {
+            printf("%d -- %d  Cost = %d\n",
+                   u, v, edges[i].weight);
+
+            totalCost += edges[i].weight;
+
+            // Merge the two sets
+            unionSet(parent, rank, u, v);
+
+            edgeCount++;
+        }
+    }
+
+    printf("\nMinimum Cost = %d\n", totalCost);
+}
+
+int main()
+{
+    int V, E;
+
+    printf("Enter number of vertices: ");
+    scanf("%d", &V);
+
+    printf("Enter number of edges: ");
+    scanf("%d", &E);
+
+    struct Edge edges[MAX];
+
+    printf("\nEnter edges (u v weight):\n");
+
+    for (int i = 0; i < E; i++)
+    {
+        scanf("%d %d %d",
+              &edges[i].u,
+              &edges[i].v,
+              &edges[i].weight);
+    }
+
+    kruskal(edges, V, E);
+
+    return 0;
+}
